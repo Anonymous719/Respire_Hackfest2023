@@ -35,9 +35,9 @@ class Landing : AppCompatActivity() {
         landingBinding.mainnavview.setOnItemSelectedListener{
             when(it.itemId) {
                 R.id.homebtn -> replacefragment(Home())
-                R.id.friendbtn -> replacefragment(Trending())
+                R.id.friendbtn -> replacefragment(Device())
                 R.id.profilebtn -> replacefragment(Profile())
-                R.id.searchbtn -> replacefragment(Device())
+                R.id.searchbtn -> replacefragment(Trending())
 
             }
             true

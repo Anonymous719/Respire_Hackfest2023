@@ -38,7 +38,8 @@
     <FrameLayout
         android:id="@+id/fragmentcontainer"
         android:layout_width="match_parent"
-        android:layout_height="650dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
 
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
