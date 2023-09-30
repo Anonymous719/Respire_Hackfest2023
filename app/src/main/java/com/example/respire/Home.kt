@@ -1,12 +1,22 @@
 package com.example.respire
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.Debug.getLocation
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.respire.databinding.FragmentHomeBinding
 import com.example.respire.databinding.FragmentProfileBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 
 class Home : Fragment() {
@@ -16,12 +26,15 @@ class Home : Fragment() {
     }
 
     private var fragbinding : FragmentHomeBinding? = null
+    var index = 20
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var index = 43
+
+        //getMyData()
+
 
         fragbinding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -50,6 +63,30 @@ class Home : Fragment() {
 
         // Inflate the layout for this fragment
         return fragbinding!!.root
+    }
+
+    private fun getMyData() {
+        val retrofitBuilder = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("https://freshair-z63x.onrender.com/")
+            .build()
+            .create(ApiInterface::class.java)
+
+        val retrofitData = retrofitBuilder.getData()
+
+        retrofitData.enqueue(object : Callback<MyData?> {
+            override fun onResponse(call: Call<MyData?>, response: Response<MyData?>) {
+                val responseBody = response.body()
+
+                if (responseBody != null) {
+                    index = responseBody.index
+                }
+            }
+
+            override fun onFailure(call: Call<MyData?>, t: Throwable) {
+                
+            }
+        })
     }
 
 

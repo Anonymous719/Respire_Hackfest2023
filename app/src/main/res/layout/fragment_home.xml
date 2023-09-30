@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Current Location"
+                android:text="Dhulikhel"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +79,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/currentheader"
                     android:textAlignment="center"
-                    android:text="The surrounding is relatively clean but please use mask if possible. The air still has some impurities and may affect due to your asthma."/>
+                    android:text="Air quality is Good. It's an excellent time to go outside and enjoy outdoor activities. It's perfect to engage in outdoor exercises and sports without significant concerns."/>
 
 
 

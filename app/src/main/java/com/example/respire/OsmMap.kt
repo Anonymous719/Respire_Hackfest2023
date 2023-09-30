@@ -13,7 +13,9 @@ import org.osmdroid.events.MapListener
 import org.osmdroid.events.ScrollEvent
 import org.osmdroid.events.ZoomEvent
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
@@ -43,18 +45,23 @@ class OsmMap : AppCompatActivity(), MapListener, GpsStatus.Listener {
         mMyLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(this), mMap)
         controller = mMap.controller
 
-        mMyLocationOverlay.enableMyLocation()
-        mMyLocationOverlay.enableFollowLocation()
-        mMyLocationOverlay.isDrawAccuracyEnabled = true
-        mMyLocationOverlay.runOnFirstFix {
-            runOnUiThread {
-                controller.setCenter(mMyLocationOverlay.myLocation);
-                controller.animateTo(mMyLocationOverlay.myLocation)
-            }
-        }
+        val initialLocation = GeoPoint(27.65311, 85.302252)
+        mMap.controller.setCenter(initialLocation)
+        mMap.controller.setZoom(17.0)
+        controller.animateTo(initialLocation)
+
+//        mMyLocationOverlay.enableMyLocation()
+//        mMyLocationOverlay.enableFollowLocation()
+//        mMyLocationOverlay.isDrawAccuracyEnabled = true
+//        mMyLocationOverlay.runOnFirstFix {
+//            runOnUiThread {
+//                controller.setCenter(mMyLocationOverlay.myLocation);
+//                controller.animateTo(mMyLocationOverlay.myLocation)
+//            }
+//        }
         // val mapPoint = GeoPoint(latitude, longitude)
 
-        controller.setZoom(6.0)
+        //controller.setZoom(6.0)
 
         Log.e("TAG", "onCreate:in ${controller.zoomIn()}")
         Log.e("TAG", "onCreate: out  ${controller.zoomOut()}")
@@ -63,6 +70,18 @@ class OsmMap : AppCompatActivity(), MapListener, GpsStatus.Listener {
         mMap.overlays.add(mMyLocationOverlay)
 
         mMap.addMapListener(this@OsmMap)
+
+        val marker = Marker(mMap)
+        marker.position = initialLocation
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        marker.title = "Bhaisipati"
+        marker.snippet = "Air Quality: 48"
+
+        // Add the marker to the map's overlay
+        mMap.overlays.add(marker)
+
+        // Refresh the map to display the marker
+        mMap.invalidate()
 
     }
 
